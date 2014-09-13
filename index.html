@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!-- define angular app -->
+<html ng-app="myApp">
+	<head>
+		<!-- Jquery & bootstrap -->
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+		<script src="bower_components/jquery/dist/jquery.min.js"></script>
+		<!-- zeroClipboard -->
+		<script src="bower_components/zeroclipboard/dist/ZeroClipboard.min.js"></script>
+		<!-- Froala files -->
+		<link rel="stylesheet" href="bower_components/FroalaWysiwygEditor/css/froala_editor.min.css" />
+		<link rel="stylesheet" href="bower_components/FroalaWysiwygEditor/css/font-awesome.min.css" />
+		<script src="bower_components/FroalaWysiwygEditor/js/froala_editor.min.js"></script>
+		<!-- Froala Plugins -->
+		<script src="bower_components/FroalaWysiwygEditor/js/plugins/tables.min.js"></script>
+		<script src="bower_components/FroalaWysiwygEditor/js/plugins/video.min.js"></script>
+		<script src="bower_components/FroalaWysiwygEditor/js/plugins/block_styles.min.js"></script>
+		<script src="bower_components/FroalaWysiwygEditor/js/plugins/colors.min.js"></script>
+		<script src="bower_components/FroalaWysiwygEditor/js/plugins/media_manager.min.js"></script>
+		<script src="bower_components/FroalaWysiwygEditor/js/plugins/lists.min.js"></script>
+		<script src="bower_components/FroalaWysiwygEditor/js/plugins/font_family.min.js"></script><script src="bower_components/FroalaWysiwygEditor/js/plugins/lists.min.js"></script>
+		<script src="bower_components/FroalaWysiwygEditor/js/plugins/font_size.min.js"></script><script src="bower_components/FroalaWysiwygEditor/js/plugins/lists.min.js"></script>
+		<script src="bower_components/FroalaWysiwygEditor/js/plugins/file_upload.min.js"></script><script src="bower_components/FroalaWysiwygEditor/js/plugins/lists.min.js"></script>
+		<!-- End Froala -->
+		<script src="bower_components/angular/angular.min.js"></script>
+		<script src="bower_components/angular-froala/src/froala-sanitize.js"></script>
+		<script src="bower_components/angular-froala/src/angular-froala.js"></script>
+
+		<style>
+			.jumbotron {margin-top: 50px;}
+			.froala-element {box-sizing:unset;}
+			#editor .alert {margin-top: 15px;}
+			.drop-upload {display:none !important;}
+		</style>
+
+
+		<script>
+			// add the module with global defaults for froala
+			var myApp = angular
+				.module('myApp', ['ngSanitize', 'froala'])
+				.value('froalaConfig', {
+					inlineMode: false,
+
+				});
+
+			// create the controller and inject Angular's $scope
+			myApp
+				.controller('mainController', function($scope) {
+					$scope.options = {
+						placeholder : 'Write or paste your content here.'
+					};
+
+					$scope.froalaAction = function(action){
+						console.log('froalaAction', action);
+						$scope.options.froala(action);
+					};
+				});
+
+
+
+			// Zero Clipboard
+			$(document).ready(function(){
+
+				// escape quotation marks so that they don't cause js trouble
+				function htmlEntities(str) {
+					return String(str)
+						.replace(/"/g, '&quot;')
+						.replace(/'/g, '&lsquo;');
+				}
+
+				var client = new ZeroClipboard($(".copy-button"));
+
+				client.on( "ready", function( readyEvent ) {
+					client.on( "copy", function( event ) {
+						var clipboard = event.clipboardData;
+						var data = $('body').scope().myHtml;
+						clipboard.setData( "text/plain", htmlEntities(data));
+					} );
+				} );
+			});
+		</script>
+	</head>
+	<!-- define angular controller -->
+	<body ng-controller="mainController">
+		<div class="container">
+			<div class="jumbotron">
+				<h2>HTML helper	<small>Project Implicit</small></h2>
+				<p>
+					This page allows you to create complex instructions or stimuli for your tasks using a simple editor.
+					You can edit your text right here, or copy it from your favorite word proccessor (although we can't promise everything will pass perfectly from there...).
+				</p>
+			</div>
+
+			<div id="editor">
+				<textarea froala="options" ng-model="myHtml"></textarea>
+				<div class="alert alert-success" role="alert">
+					When you're done editing click <a class="copy-button" href="javascript:void(0);">here</a> to automaticaly copy the html.
+					Don't forget to wrap it in <code>""</code> or <code>''</code> when you paste it in your code.
+				</div>
+			</div>
+
+
+			</br><hr>
+			<h4>
+				The raw HTML:
+				<button type="button" class="btn btn-success pull-right btn-xs copy-button">Copy HTML</button>
+			</h4>
+			<pre>{{ myHtml }}</pre>
+
+			<p>The editor we're using is called <a href="http://editor.froala.com/">Froala</a>, We're using it under the <a href="http://creativecommons.org/licenses/by-nc-nd/4.0/">CC NC-ND License</a>. They do a great job, if you're looking for a WYSIWYG editor, please use them!</p>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "name": "html-helper",
+  "version": "0.0.0",
+  "homepage": "https://github.com/ProjectImplicit/html-helper",
+  "authors": [
+    "ez.implicit@gmail.com"
+  ],
+  "description": "A helper for researchers to create and edit html for their js projects.",
+  "main": "index.html",
+  "keywords": [
+    "ProjectImplicit",
+    "html"
+  ],
+  "dependencies": {
+    "angular-froala": "~1.2.1",
+    "zeroclipboard": "~2.1.6"
+  }
+}
