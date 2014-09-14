@@ -25,6 +25,7 @@
 		<script src="bower_components/angular/angular.min.js"></script>
 		<script src="bower_components/angular-froala/src/froala-sanitize.js"></script>
 		<script src="bower_components/angular-froala/src/angular-froala.js"></script>
+		<script src="bower_components/angular-elastic/elastic.js"></script>
 
 		<style>
 			.jumbotron {margin-top: 50px;}
@@ -38,7 +39,7 @@
 		<script>
 			// add the module with global defaults for froala
 			var myApp = angular
-				.module('myApp', ['ngSanitize', 'froala'])
+				.module('myApp', ['ngSanitize', 'froala','monospaced.elastic'])
 				.value('froalaConfig', {
 					inlineMode: false,
 
@@ -109,7 +110,7 @@
 					The raw HTML:
 					<button type="button" class="btn btn-success pull-right btn-xs copy-button">Copy HTML</button>
 				</h4>
-				<textarea ng-model="myHtml"></textarea>
+				<textarea msd-elastic ng-model="myHtml"></textarea>
 			</div>
 
 			<p>The editor we're using is called <a href="http://editor.froala.com/">Froala</a>, We're using it under the <a href="http://creativecommons.org/licenses/by-nc-nd/4.0/">CC NC-ND License</a>. They do a great job, if you're looking for a WYSIWYG editor, please use them!</p>
