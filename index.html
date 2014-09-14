@@ -31,6 +31,7 @@
 			.froala-element {box-sizing:unset;}
 			#editor .alert {margin-top: 15px;}
 			.drop-upload {display:none !important;}
+			#html textarea {width: 100%; resize: none;}
 		</style>
 
 
@@ -89,6 +90,7 @@
 					This page allows you to create complex instructions or stimuli for your tasks using a simple editor.
 					You can edit your text right here, or copy it from your favorite word proccessor (although we can't promise everything will pass perfectly from there...).
 				</p>
+				<p>If you want to edit existing HTML, simply paste it into the text area below.</p>
 			</div>
 
 			<div id="editor">
@@ -100,12 +102,15 @@
 			</div>
 
 
-			</br><hr>
-			<h4>
-				The raw HTML:
-				<button type="button" class="btn btn-success pull-right btn-xs copy-button">Copy HTML</button>
-			</h4>
-			<pre>{{ myHtml }}</pre>
+			<hr>
+
+			<div id="html">
+				<h4>
+					The raw HTML:
+					<button type="button" class="btn btn-success pull-right btn-xs copy-button">Copy HTML</button>
+				</h4>
+				<textarea ng-model="myHtml"></textarea>
+			</div>
 
 			<p>The editor we're using is called <a href="http://editor.froala.com/">Froala</a>, We're using it under the <a href="http://creativecommons.org/licenses/by-nc-nd/4.0/">CC NC-ND License</a>. They do a great job, if you're looking for a WYSIWYG editor, please use them!</p>
 		</div>
